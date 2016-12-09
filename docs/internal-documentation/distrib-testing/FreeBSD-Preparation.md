@@ -30,6 +30,7 @@
    ```
 
 5. Reboot into latest patch level
+
    ```sh
    shutdown -r now
    ```
