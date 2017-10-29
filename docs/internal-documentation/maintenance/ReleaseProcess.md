@@ -6,6 +6,10 @@ Release process
 Any changes since the last release must be documented in the Changes files.
 Please refer to any Github issues related to the change by the issue number.
 
+All changes must be categorized into one of Changed, Removed (mandating major
+version bump), Added (mandading minor version bump), Fixed or Deprecated
+(mandating patch version bump).
+
  * zonemaster-ldns - [Changes](https://github.com/dotse/zonemaster-ldns/blob/master/Changes)
  * zonemaster-engine - [Changes](https://github.com/dotse/zonemaster-engine/blob/master/Changes)
  * zonemaster-cli - [Changes](https://github.com/dotse/zonemaster-cli/blob/master/Changes)
