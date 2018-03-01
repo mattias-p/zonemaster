@@ -24,16 +24,16 @@ Obtain the parent zone of the given domain (zone).
 4. If the recursive lookup reaches a name server that authoritatively responds
    with NXDOMAIN for the child domain (child zone), the method succeeds. The zone
    returning NXDOMAIN is considered to be the parent zone.
-5. If the recursive lookup reaches authorititative NOERROR answer, with or with
-   record in the answer section, the method fails, and no parent zone is found.
+5. If the recursive lookup reaches authorititative NOERROR answer, with or without
+   records in the answer section, the method fails, and no parent zone is found.
 6. If the recurse lookup is exhausted or ends in a loop, then the method fails
    and no parent zone is found.
 
 
 ## Method 2: Delegation name servers
 
-Obtain the name servers (NS records) for the given zone as defined in
-its delegation from the parent zone.
+Obtain the name servers names (extracted from the NS records) for 
+the given zone (child zone) as defined in the delegation from the parent zone.
 
 1. Obtain parent zone using Method 1.
 
@@ -41,9 +41,9 @@ A. Normal test. For undelegated test go to B.
 
 2. Send an SOA query for the given domain name (zone) to one of the authoritative
    name servers for the parent zone.
-3. Record all A and AAAA records in the additional section and store in a cache that
-   method 4 can use.
-4. Record all NS records in the authority section and return the name server names
+3. Collect all A and AAAA records in the additional section and store them 
+   in a cache that method 4 can use.
+4. Collect all NS records in the authority section and return the name server names
    in the response.
 
 B. Undelegated test.
@@ -58,15 +58,15 @@ B. Undelegated test.
 
 ## Method 3: In-zone name servers
 
-Obtain the authoritative name servers (NS) for the given zone (child zone) as 
-defined in the zone itself.
+Obtain the names of the authoritative name servers for the given zone 
+(child zone) as defined in the NS records in the zone itself.
 
 1. Obtain name server addresses using Method 4.
 2. Send an NS query for the given zone to all obtained name server addresses.
 3. Ignore response unless AA flag is set.
-4. Record all the unique NS records in the answer sections of the
-   responses in step 2.
-5. Return all name server names (RDATA) of the NS from step 3.
+4. Collect all the unique NS records in the answer sections of the
+   responses.
+5. Return all name server names from the NS records.
 
 
 ## Method 4: Delegation name server addresses
