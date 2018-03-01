@@ -115,12 +115,12 @@ zone as defined in the zone itself.
 5. If a delegation (referal) to a sub-zone of child zone is returned, 
    follow that delegation, possibly in several steps, by repeating the
    A and AAAA queries.
-5. Ignore non-referal responses unless AA flag is set. Cached data
+6. Ignore non-referal responses unless AA flag is set. Cached data
    is not accepted.
-6. Record a list of unique IPv4 addreses and unique IPv6 addresses,
+7. Create a list of unique IPv4 addreses and unique IPv6 addresses,
    respectively, found in the answer sections of the responses for
    each name server name.
-7. Return a stucture where name server name is connected to its
+8. Return a stucture where name server name is connected to its
    address or addresses. If a name server does not have any, that
    name server must be returned with a empty address field.
 
