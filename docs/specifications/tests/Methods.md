@@ -15,17 +15,19 @@ Obtain the parent zone of the given domain (zone).
 
 1. The given domain is assumed to be apex of a zone with the same
    name, and is here refered to as the _child zone_.
-1. A recursive lookup for the SOA record of the child domain name starting from the
+2. A recursive lookup for the SOA record of the child domain name starting from the
    root zone is done, and the steps of the process are recorded.
-2. If the lookup reaches a name server that responds with a redirect (delegation)
-   directly to the requested child zone the test
+3. If the lookup reaches a name server that responds with a redirect (delegation)
+   directly to the requested child zone the method
    succeeds. The zone in which the delegation was found is
    considered to be the parent zone.  
-3. If the recursive lookup reaches a name server that authoritatively responds
-   with NXDOMAIN for the child domain (child zone), the test succeeds. The zone
+4. If the recursive lookup reaches a name server that authoritatively responds
+   with NXDOMAIN for the child domain (child zone), the method succeeds. The zone
    returning NXDOMAIN is considered to be the parent zone.
-4. If the recursive lookup reaches authorititative NOERROR answer, with or with
-   record in the answer section, the test failed.
+5. If the recursive lookup reaches authorititative NOERROR answer, with or with
+   record in the answer section, the method fails, and no parent zone is found.
+6. If the recurse lookup is exhausted or ends in a loop, then the method fails
+   and no parent zone is found.
 
 
 ## Method 2: Delegation name servers
