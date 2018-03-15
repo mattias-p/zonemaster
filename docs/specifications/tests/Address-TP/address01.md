@@ -34,9 +34,15 @@ The domain name to be tested.
 
 ### Outcome(s)
 
-If one name server has one of its addresses matches a forbidden address
-block, the test fails. If all the name server addresses are outside these
-forbidden blocks, the test case succeeds. 
+The outcome of this test case is the severity of the most severe log
+message emitted during its execution.
+
+| Log message identifier                      | Description    |
+|:--------------------------------------------|:---------------|
+| ADDRESS:DEL_NAMESERVER_IPV4_PRIVATE_NETWORK | A name server IPv4 address belongs to a special purpose range. |
+| ADDRESS:DEL_NAMESERVER_IPV6_PRIVATE_NETWORK | A name server IPv6 address belongs to a special purpose range. |
+| ...                                         | |
+
 
 ### Special procedural requirements
 
