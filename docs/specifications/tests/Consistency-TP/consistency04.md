@@ -26,11 +26,24 @@ consistent between all the authoritative name servers.
 2. Retrieve the NS RR set from all the name servers. 
 3. If the NS RR set is not give the same answer from all the name
    servers, this test case fails.
+4. If not all the designated authoritative name servers answer with the
+   same NS RR set, this test case fails.
+
 
 ### Outcome(s)
 
-If not all the designated authoritative name servers answer with the
-same NS RR set, this test case fails.
+The outcome of this test case is the severity of the most severe log
+message emitted during its execution.
+
+| Log message identifier                | Description    |
+|:--------------------------------------|:---------------|
+| CONSISTENCY:DEL_MULTIPLE_NS_SET       | Mismatch on NS between servers. |
+| CONSISTENCY:DEL_NO_RESPONSE_NS_QUERY  | Some NS query was not responded to. |
+| CONSISTENCY:DEL_NO_RESPONSE_SOA_QUERY | Some SOA query was not responded to. |
+| CONSISTENCY:DEL_IS_NOT_AUTHORITATIVE  | Some response had the AA bit unset. |
+| CONSISTENCY:DEL_UNEXPECTED_ANSWER     | Some response did not have a SOA record with the domain name under test as owner name in the answer section. |
+| ...                                   | |
+
 
 ### Special procedural requirements	
 
