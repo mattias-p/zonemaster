@@ -19,45 +19,56 @@ authoritative name servers does not belong to the same AS.
 
 ### Inputs
 
-The domain name to be tested.
+ * The domain name to be tested.
+ * A list of ASN lookup domains.
+
 
 ### Ordered description of steps to be taken to execute the test case
 
-1. Obtain the IP addresses of the name servers from [Method4](../Methods.md).
-2. Obtain the list of ASN lookup domains from the configuration of Zonemaster.
-3. For obtaining the AS numbers for IPv6 addresses; first reverse its eight
-4-character hexadecimal numbers and place dots between each. It is important 
-all omitted zeroes are included.  
-3.1. At the end of the reversed IPv6 address, concatenate the string (from
-step 2)  
-3.2 Send a "TXT" query using the string (obtained from Step 3.1)  
-3.3 If there is an ANSWER, then go to step 3.4, else go to the next string
-in the list (from step 2)  
-3.4 The AS number for the IPv6 address is found in the ANSWER for the query 
-4. To obtain the AS numbers for IPv4 addresses; first reverse the four numerical
-octets and place dots between each.  
-4.1. At the end of the reversed IPv4 address concatenate the string (from step 2)  
-4.2 Send a "TXT" query using the string (obtained from Step 4.1)  
-4.3 If there is an ANSWER, go to step 4.4, else go to the next string
-in the list (from step 2)  
-4.4 The AS number for the IPv4 address is found in the ANSWER for the query 
-5. If all the retrieved AS (obtained from step 3.3 and 4.3) are same, then the test
-   fails.
+ 1. Obtain a set of IP addresses using [Method4].
+ 2. For each IP address:
+     1. Reverse the IP address (see [Special procedural requirements]).
+     2. Construct a domain name by joining the reversed IP address with
+        one of the ASN lookup domains.
+     3. Construct a TXT query for the domain name.
+     4. Send the query to the public DNS.
+     5. If a reponse is received with a TXT record in the ANSWER section:
+         1. Take not of the AS number from the TXT record, and whether
+            the IP address is an IPv4 or IPv6 address.
+
 
 ### Outcome(s)
 
-If there is a AS which is different from the other retrieved AS, then the
-test succeeds.
+The outcome of this test case is the severity of the most severe log
+message emitted during its execution.
+
+| Log message identifier                     | Description                                 |
+|:-------------------------------------------|:--------------------------------------------|
+| CONNECTIVITY:NAMESERVERS_IPV4_WITH_UNIQ_AS | All the IPv4 addresses were in the same AS. |
+| CONNECTIVITY:NAMESERVERS_IPV6_WITH_UNIQ_AS | All the IPv6 addresses were in the same AS. |
+
 
 ### Special procedural requirements
 
-None
+To reverse an IPv4 addresses:
+ 1. Split it into a list of four numbers.
+ 2. Rerverse the list.
+ 3. Join the list into a string with dots between the elements.
+
+To reverse an IPv6 addresses:
+ 1. Split it into a list of eight 4-hexdigit numbers.
+ 2. Reverse the list.
+ 3. Join the list into a string with dots between the elements.
+
 
 ### Intercase dependencies
 
 None
 
 -------
+
+[Method4]: ../Methods.md#method-4-delegation-name-server-addresses
+[Special procedural requirements]: #special-procedural-requirements
 
 Copyright (c) 2013, 2014, 2015, IIS (The Internet Infrastructure Foundation)  
 Copyright (c) 2013, 2014, 2015, AFNIC  
