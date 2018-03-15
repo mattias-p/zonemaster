@@ -26,7 +26,9 @@ serial number consistency.
 
 ### Inputs
 
-The domain name to be tested.
+ * The domain name to be tested.
+ * Allowed SOA serial tolerance.
+
 
 ### Ordered description of steps to be taken to execute the test case
 
@@ -43,14 +45,21 @@ The domain name to be tested.
 
 ### Outcome(s)
 
-All authoritative name servers must have consistent serial numbers. If the
-test does not find any inconsistency, then the test case passes.
+The outcome of this test case is the severity of the most severe log
+message emitted during its execution.
 
-### Special procedural requirements	
+| Log message identifier            | Description                                                  |
+|:----------------------------------|:-------------------------------------------------------------|
+| CONSISTENCY:NO_RESPONSE_SOA_QUERY | At least one server failed to give a SOA response.           |
+| CONSISTENCY:SOA_SERIAL_VARIATION  | A tolerable SOA serial difference was detected.              |
+| CONSISTENCY:MULTIPLE_SOA_SERIALS  | A SOA serial difference greater than tolerable was detected. |
 
 If either IPv4 or IPv6 transport is disabled, ignore the evaluation of the
 result of any test using this transport protocol. Log a message reporting
 on the ignored result.
+
+
+### Special procedural requirements
 
 A manual inspection of the SOA serial may be needed to determine if the zone
 updates work properly or not, and if the serial values are within a
