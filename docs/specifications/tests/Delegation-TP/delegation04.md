@@ -27,10 +27,22 @@ The domain name to be tested.
    without any exceptions.
 4. If any name server fail to give an authoritative answer ("AA-bit" is set
    in the answer), the test fails.
+5. If all the name servers answer with the AA-bit set, then the test succeeds.
+
 
 ### Outcome(s)
 
-If all the name servers answer with the AA-bit set, then the test succeeds.
+The outcome of this test case is the severity of the most severe log
+message emitted during its execution.
+
+| Log message identifier              | Description    |
+|:------------------------------------|:---------------|
+| DELEGATION:DEL_IS_NOT_AUTHORITATIVE | Some response had the AA bit unset. |
+| DELEGATION:DEL_NO_RESPONSE_NS_QUERY | Some query was not responded to. |
+| DELEGATION:DEL_UNEXPECTED_RCODE     | Some response had an RCODE not being NOERROR. |
+| DELEGATION:DEL_UNEXPECTED_ANSWER    | Some response did not have a SOA record with the domain name under test as owner name in the answer section. |
+| ...                                 | |
+
 
 ### Special procedural requirements
 
