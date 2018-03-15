@@ -25,11 +25,23 @@ The domain name to be tested.
 4. If the number of name servers (distinct NS records) returned in the previous step is less than two, the
    record as an error.
 5. If an error was recorded in step 2 or step 4, then the test case fails.
- 
+6. If the total amount of name servers used for the domain are two or more,
+   then the test case succeeds.
+
 ### Outcome(s)
 
-If the total amount of name servers used for the domain are two or more,
-then the test case succeeds.
+The outcome of this test case is the severity of the most severe log
+message emitted during its execution.
+
+| Log message identifier            | Description                                                              |
+|:----------------------------------|:-------------------------------------------------------------------------|
+| DELEGATION:DEL_NOT_ENOUGH_NS      | The number of distinct NS records wass less than two.                    |
+| DELEGATION:DEL_NOT_ENOUGH_IPV4    | The number of IPv4 addresses in the set was less than two.               |
+| DELEGATION:DEL_NOT_ENOUGH_IPV6    | The number of IPv6 addresses in the set was less than two.               |
+| DELEGATION:DEL_SAME_IPV4_ADDRESS  | The same IPv4 address was found with more than one name servers (FQDNs). |
+| DELEGATION:DEL_SAME_IPV6_ADDRESS  | The same IPv6 address was found with more than one name servers (FQDNs). |
+| ...                               |                                                                          |
+
 
 ### Special procedural requirements
 
