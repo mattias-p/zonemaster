@@ -24,11 +24,20 @@ The domain to be tested.
    found in step 1.
 3. If all queries in step 2 receive a DNS answer (bogus responses are not
    checked here) then the test case succeed.
+4. If there is any name server that fails to answer queries over port 53 using
+   UDP, this test case fails
+
 
 ### Outcome(s)
 
-If there is any name server that fails to answer queries over port 53 using
-UDP, this test case fails
+The outcome of this test case is the severity of the most severe log
+message emitted during its execution.
+
+| Log message identifier            | Description    |
+|:----------------------------------|:---------------|
+| CONNECTIVITY:NAMESERVER_NO_UDP_53 | At least one name server failed to respond with a DNS packet. |
+| ...                               | |
+
 
 ### Special procedural requirements	
 
