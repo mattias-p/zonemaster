@@ -24,8 +24,14 @@ The domain name to be tested.
 
 ### Outcome(s)
 
-If any response comes from another IP address than the query was sent to,
-this test case fails.
+The outcome of this test case is the severity of the most severe log
+message emitted during its execution.
+
+| Log message identifier             | Description    |
+|:-----------------------------------|:---------------|
+| NAMESERVER:DEL_DIFFERENT_SOURCE_IP | Some response had a source IP that was different from the target IP of the query. |
+| ...                                | |
+
 
 ### Special procedural requirements
 
