@@ -28,8 +28,14 @@ The domain name to be tested.
 
 ### Outcome(s)
 
-If all the IP addresses used by the name servers for the domain are unique,
-then the test succeeds.
+The outcome of this test case is the severity of the most severe log
+message emitted during its execution.
+
+| Log message identifier            | Description                                                              |
+|:----------------------------------|:-------------------------------------------------------------------------|
+| DELEGATION:DEL_SAME_IPV4_ADDRESS  | The same IPv4 address was found with more than one name servers (FQDNs). |
+| DELEGATION:DEL_SAME_IPV6_ADDRESS  | The same IPv6 address was found with more than one name servers (FQDNs). |
+| ...                               |                                                                          |
 
 ### Special procedural requirements
 

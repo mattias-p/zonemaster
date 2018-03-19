@@ -38,8 +38,6 @@ message emitted during its execution.
 | DELEGATION:DEL_NOT_ENOUGH_NS      | The number of distinct NS records wass less than two.                    |
 | DELEGATION:DEL_NOT_ENOUGH_IPV4    | The number of IPv4 addresses in the set was less than two.               |
 | DELEGATION:DEL_NOT_ENOUGH_IPV6    | The number of IPv6 addresses in the set was less than two.               |
-| DELEGATION:DEL_SAME_IPV4_ADDRESS  | The same IPv4 address was found with more than one name servers (FQDNs). |
-| DELEGATION:DEL_SAME_IPV6_ADDRESS  | The same IPv6 address was found with more than one name servers (FQDNs). |
 | ...                               |                                                                          |
 
 
