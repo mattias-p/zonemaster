@@ -46,13 +46,16 @@ will implement.
 ### References
 #### External
 
-The current implemented tests in DNSCheck are described here:  
-<https://github.com/dotse/dnscheck/wiki/Tests>  
-<https://github.com/dotse/dnscheck/wiki/Detailed-list-of-all-possible-dnscheck-messages>
+The current implemented tests in DNSCheck are described here (copied
+from the DNSCheck Github Wiki):
 
-The current implemented tests in Zonecheck
-are described in [ExistingZCPolicy.md](
-../../internal-documentation/requirements/ExistingZCPolicy.md).
+* [DNSCheck-Tests.md](../../requirements/supporting-documents/DNSCheck-Tests.md)
+* [Detailed-list-of-all-possible-dnscheck-messages.md](../../requirements/supporting-documents/Detailed-list-of-all-possible-dnscheck-messages.md)
+* [Algorithms-used-by-dnscheck.md](../../requirements/supporting-documents/Algorithms-used-by-dnscheck.md)
+
+The current implemented tests in Zonecheck are described in here (copied from previous Zonecheck site):
+* [ExistingZCPolicy.md](../../requirements/supporting-documents/ExistingZCPolicy.md)
+
 
 #### Internal
 No internal requirements.
@@ -292,15 +295,16 @@ TODO: do we need a separate requirements document?
 
 #### DNSCheck
 
-These are the current documented test cases from DNSCheck:  
-<https://github.com/dotse/dnscheck/wiki/Tests>  
-<https://github.com/dotse/dnscheck/wiki/Detailed-list-of-all-possible-dnscheck-messages>
+These are the current documented test cases from DNSCheck (copied
+from DNSCheck Github Wiki):  
+* [DNSCheck-Tests.md](../../requirements/supporting-documents/DNSCheck-Tests.md)
+* [Detailed-list-of-all-possible-dnscheck-messages.md](../../requirements/supporting-documents/Detailed-list-of-all-possible-dnscheck-messages.md)
 
 #### Zonecheck
 
-The current implemented tests in Zonecheck
-are described in [ExistingZCPolicy.md](
-../../internal-documentation/requirements/ExistingZCPolicy.md).
+The current implemented tests in Zonecheck are described in (copied from previous Zonecheck site):
+* [ExistingZCPolicy.md](../../requirements/supporting-documents/ExistingZCPolicy.md)
+
 
 #### RFCs
 
@@ -441,7 +445,7 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtain the IP addresses of each name server of the domain from the parent using
-   [Method4](../Methods.md) and child using [Method5](../Methods.md)
+   [Method4](Methods.md) and child using [Method5](Methods.md)
 
 2. If any IP address (IPv4 or IPv6) falls within any of the blocks in the below
    mentioned IANA links, the test case fails:
@@ -494,10 +498,10 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtain the glue address records  of the domain checked
-   using [Method4](../Methods.md)
+   using [Method4](Methods.md)
 
 2. Obtain the IP addresses of each name server of the domain checked
-   using [Method5](../Methods.md)
+   using [Method5](Methods.md)
 
 3. For each IP address, a recursive PTR query must be performed.
 
@@ -545,7 +549,7 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtain the IP addresses of each name server of the domain from the child
-   using [Method5](../Methods.md).
+   using [Method5](Methods.md).
    These IP addresses can be associated to the name servers through a hash 
    table where each address is a key and the name server it's unique value.
    Let's call this hash table HASH1.
@@ -739,7 +743,7 @@ The label of the domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Retrieve the IP addresses from the parent delegation using [Method 4](
-   ../Methods.md#method-4-obtain-glue-address-records-from-parent). For name
+   Methods.md#method-4-obtain-glue-address-records-from-parent). For name
    server that are out-of-bailiwick, do separate recursive queries to retrieve
    the IP addresses of those names.
 2. An NS query for the domain name should be sent to each address.
@@ -782,7 +786,7 @@ The label of the domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Retrieve the IP addresses from the parent delegation using [Method 4](
-   ../Methods.md#method-4-obtain-glue-address-records-from-parent). For name
+   Methods.md#method-4-obtain-glue-address-records-from-parent). For name
    server that are out-of-bailiwick, do separate recursive queries to retrieve
    the IP addresses of those names.
 2. An A query for the child domain name with the label 'www' prepended is
@@ -841,8 +845,8 @@ The domain to be tested.
 
 ### Ordered description of steps to be taken to execute the test case
 
-1. Obtains the IP address of the name servers from [Method4](../Methods.md)
-   and [Method5](../Methods.md)
+1. Obtains the IP address of the name servers from [Method4](Methods.md)
+   and [Method5](Methods.md)
 2. A SOA query is sent over UDP to distinct IP addresses of each name server
    found in step 1.
 3. If all queries in step 2 receive a DNS answer (bogus responses are not
@@ -883,8 +887,8 @@ The domain to be tested.
 
 ### Ordered description of steps to be taken to execute the test case
 
-1. Obtains the IP addresses of the name servers from [Method4](../Methods.md)
-   and [Method5](../Methods.md)
+1. Obtains the IP addresses of the name servers from [Method4](Methods.md)
+   and [Method5](Methods.md)
 2. A SOA query is sent over TCP to distinct IP address of each name server
    found in step 1.
 3. If all queries in step 2 receive a DNS answer (bogus response are not
@@ -930,7 +934,7 @@ The domain name to be tested.
 
 ### Ordered description of steps to be taken to execute the test case
 
-1. Obtain the IP addresses of the name servers from [Method4](../Methods.md).
+1. Obtain the IP addresses of the name servers from [Method4](Methods.md).
 2. Obtain the list of ASN lookup domains from the configuration of Zonemaster.
 3. For obtaining the AS numbers for IPv6 addresses; first reverse its eight
 4-character hexadecimal numbers and place dots between each. It is important 
@@ -1045,8 +1049,8 @@ reasonable range, then the test is OK.
 
 None
 
-[Method4]: ../Methods.md#method-4-obtain-glue-address-records-from-parent
-[Method5]: ../Methods.md#method-5-obtain-the-name-server-address-records-from-child
+[Method4]: Methods.md#method-4-obtain-glue-address-records-from-parent
+[Method5]: Methods.md#method-5-obtain-the-name-server-address-records-from-child
 
 
 ## CONSISTENCY02: RNAME consistency
@@ -1073,8 +1077,8 @@ consistent between different authoritative name servers.
 
 ### Ordered description of steps to be taken to execute the test case
 
-1. Obtain the list of name servers from [Method4](../Methods.md) and
-   [Method5](../Methods.md).
+1. Obtain the list of name servers from [Method4](Methods.md) and
+   [Method5](Methods.md).
 2. Retrieve the SOA RR from all the name servers. 
 3. If the SOA RNAME field is not the same from all the answers
    received from step 2, then the test case fails.
@@ -1122,8 +1126,8 @@ The domain name to be tested.
 
 ### Ordered description of steps to be taken to execute the test case
 
-1. Obtain the list of name servers from [Method4](../Methods.md) and
-   [Method5](../Methods.md).
+1. Obtain the list of name servers from [Method4](Methods.md) and
+   [Method5](Methods.md).
 2. Retrieve the SOA RR from all the name servers. 
 3. If the SOA RNAME field is not the same from all the answers
    received from step 2, then the test case fails.
@@ -1166,8 +1170,8 @@ consistent between all the authoritative name servers.
 
 ### Ordered description of steps to be taken to execute the test case
 
-1. Obtain the list of name servers from [Method2](../Methods.md) and
-   [Method3](../Methods.md).
+1. Obtain the list of name servers from [Method2](Methods.md) and
+   [Method3](Methods.md).
 2. Retrieve the NS RR set from all the name servers. 
 3. If the NS RR set is not give the same answer from all the name
    servers, this test case fails.
@@ -1210,8 +1214,8 @@ consistent between glue and authoritative date.
 
 ### Ordered description of steps to be taken to execute the test case
 
-1. Obtain the list of address records from [Method4](../Methods.md) and
-   [Method5](../Methods.md).
+1. Obtain the list of address records from [Method4](Methods.md) and
+   [Method5](Methods.md).
 2. If the set of address records are not consistent between the glue address
    records and the name server address records from the child, this test case fails.
 
@@ -1271,11 +1275,11 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtain the complete set of name servers from parent using
-   [Method2](../Methods.md).
+   [Method2](Methods.md).
 2. If the number of name servers (distinct NS records) returned in previous step is less than two, the
    record as an error.
 3. Obtain the complete set of name servers from the child 
-   using [Method3](../Methods.md).
+   using [Method3](Methods.md).
 4. If the number of name servers (distinct NS records) returned in the previous step is less than two, the
    record as an error.
 5. If an error was recorded in step 2 or step 4, then the test case fails.
@@ -1318,8 +1322,8 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtain the IP addresss of the name servers from the parent using [Method
-4](../Methods.md#method-4-obtain-glue-address-records-from-parent) and the child using
-   [Method 5](../Methods.md#method-5-obtain-the-name-server-address-records-from-child).
+4](Methods.md#method-4-obtain-glue-address-records-from-parent) and the child using
+   [Method 5](Methods.md#method-5-obtain-the-name-server-address-records-from-child).
 2. If any of the IP addresses resolved in step 1 is not unique, then this
    test case fails.
 
@@ -1366,7 +1370,7 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtains the IP addresss of the name servers from the parent using
-   [Method4](../Methods.md) and the child using [Method5](../Methods.md).
+   [Method4](Methods.md) and the child using [Method5](Methods.md).
 2. Create a DNS packet holding a query for a maximally long name in the relevant
    zone (that is, 255 octets including label separators).
 3. Add all unique NS records for the zone obtained from step1 to the Authority section.
@@ -1413,7 +1417,7 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtain the complete set of name server address records from the parent using
-   [Method4](../Methods.md) and the child using [Method5](../Methods.md).
+   [Method4](Methods.md) and the child using [Method5](Methods.md).
 2. All the uniquely obtained address records are queried for the SOA record 
    over TCP and UDP on port 53.
 3. For each query in step 2, check whether DNS answer (bogus response are not
@@ -1460,7 +1464,7 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtain the complete set of name server address records from the parent using
-   [Method4](../Methods.md) and the child using [Method5](../Methods.md).
+   [Method4](Methods.md) and the child using [Method5](Methods.md).
 2. All the uniquely obtained address records are queried for A and AAAA records.
 3. If any of the name server queried responded with the resource record type
    CNAME, then this test case fails.
@@ -1501,7 +1505,7 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtain the complete set of name server address records from the parent using
-   [Method4](../Methods.md) and the child using [Method5](../Methods.md).
+   [Method4](Methods.md) and the child using [Method5](Methods.md).
 2. All the uniquely obtained address records are queried for the SOA record.
 3. If there is an answer with NOERROR and there is no content in the
    answer section, this test case fails.
@@ -1541,9 +1545,9 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtain the complete set of name servers from the parent using
-   [Method2](../Methods.md) and the child using [Method3](../Methods.md).
-3. If the set of NS names obtained from [Method2](../Methods.md) are 
-   not found in [Method3](../Methods.md), then the test fails.
+   [Method2](Methods.md) and the child using [Method3](Methods.md).
+3. If the set of NS names obtained from [Method2](Methods.md) are 
+   not found in [Method3](Methods.md), then the test fails.
 
 ### Outcome(s)
 
@@ -2262,7 +2266,7 @@ The domain name to be tested.
 
 ### Ordered description of steps to be taken to execute the test case
 1. Retrieve all address records for all the name servers using [Method
-   4](../Methods.md) and [Method 5](../Methods.md).
+   4](Methods.md) and [Method 5](Methods.md).
 2. A SOA query for an almost certainly nonexistent name sent to the each
    name server IP address found in step 1, with the flag Recursion Desired 
    (RD) set.
@@ -2314,8 +2318,8 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Retrieve all address records for all the name servers using
-   [Method 4](../Methods.md#method-4-obtain-glue-address-records-from-parent) and
-   [Method 5](../Methods.md#method-5-obtain-the-name-server-address-records-from-child),
+   [Method 4](Methods.md#method-4-obtain-glue-address-records-from-parent) and
+   [Method 5](Methods.md#method-5-obtain-the-name-server-address-records-from-child),
    and do recursive lookups for the name servers that are out of bailiwick.
 2. Send a DNS query to each name server IP address querying the SOA record
    of the domain name with EDNS0 option of payload size ("bufsize")
@@ -2361,7 +2365,7 @@ The domain name to be tested.
 
 ### Ordered description of steps to be taken to execute the test case
 1. Retrieve all address records for all the name servers using [Method 
-   4](../Methods.md) and [Method 5](../Methods.md).
+   4](Methods.md) and [Method 5](Methods.md).
 2. Send an AXFR query to each name server IP address found in step 1.
 3. If any answer to the AXFR query is starting with the SOA record
    for the domain, this test case fails.
@@ -2399,7 +2403,7 @@ The domain name to be tested.
 
 ### Ordered description of steps to be taken to execute the test case
 1. Retrieve all address records for all the name servers using [Method 
-   4](../Methods.md) and [Method 5](../Methods.md).
+   4](Methods.md) and [Method 5](Methods.md).
 2. A SOA query for the domain name sent to the each name server IP address 
    found in step 1.
 3. Any answer received from the SOA query must come from the same source IP address
@@ -2442,8 +2446,8 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Retrieve all address records for all the name servers using
-   [Method 4](../Methods.md#method-4-obtain-glue-address-records-from-parent) and
-   [Method 5](../Methods.md#method-5-obtain-the-name-server-address-records-from-child),
+   [Method 4](Methods.md#method-4-obtain-glue-address-records-from-parent) and
+   [Method 5](Methods.md#method-5-obtain-the-name-server-address-records-from-child),
    and do recursive lookups for the name servers that are out of bailiwick.
 2. Send a DNS query to each name server IP address querying the AAAA record
    of the domain name.
@@ -2499,12 +2503,12 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 
 1. Obtain the list of name servers for the domain using [Method 2](
-   ../Methods.md#method-2-obtain-glue-name-records-from-parent) and [Method 3](
-   ../Methods.md#method-3-obtain-name-servers-from-child).
+   Methods.md#method-2-obtain-glue-name-records-from-parent) and [Method 3](
+   Methods.md#method-3-obtain-name-servers-from-child).
 2. Use [Method 4](
-   ../Methods.md#method-4-obtain-glue-address-records-from-parent) and
+   Methods.md#method-4-obtain-glue-address-records-from-parent) and
    [Method 5](
-   ../Methods.md#method-5-obtain-the-name-server-address-records-from-child)
+   Methods.md#method-5-obtain-the-name-server-address-records-from-child)
    to resolve all the name server names obtained in step 1.
 3. If any name does not resolve to either an A RR or AAAA RR, this test
    case fails.
@@ -2546,7 +2550,7 @@ The domain name to be tested.
 ### Ordered description of steps to be taken to execute the test case
 1. If the input domain to be tested is the root, exit from the test.
 2. Retrieve all address records for all the name servers using [Method 
-   4](../Methods.md) and [Method 5](../Methods.md).
+   4](Methods.md) and [Method 5](Methods.md).
 3. An NS query is sent to each name server IP address found in step 2,
    with the root “.” as the destination 
 4. If any of the query returns with one or more responses in the
@@ -2592,7 +2596,7 @@ The domain name to be tested.
 
 ### Ordered description of steps to be taken to execute the test case
 1. Retrieve all address records for all the name servers using [Method 
-   4](../Methods.md) and [Method 5](../Methods.md).
+   4](Methods.md) and [Method 5](Methods.md).
 2. A random query with mixed case (e.G Www.iETf.Org) is sent to each unique name
    server IP address found in step 1.
 3. Remember the case of the QNAME in the query sent.
@@ -2633,7 +2637,7 @@ The domain name to be tested.
 
 ### Ordered description of steps to be taken to execute the test case
 1. Retrieve all address records for all the name servers using [Method 
-   4](../Methods.md) and [Method 5](../Methods.md).
+   4](Methods.md) and [Method 5](Methods.md).
 2. Send a query with the input string in a mixed case (e.g. wWW.iETF.oRG) to
    each of the name server IP address found in step 1. 
 3. If the "answer" flag is greater than 0, remember the "answer" section, else
@@ -2821,8 +2825,8 @@ used, from both the parent and the zone itself.
 
 ### Ordered description of steps to be taken to execute the test case
 
-1. Obtain the list of name server hostnames from [Method2](../Methods.md) and
-   [Method3](../Methods.md)
+1. Obtain the list of name server hostnames from [Method2](Methods.md) and
+   [Method3](Methods.md)
    (This is all the name servers from the parent delegation, and all the
    name servers in the apex of the zone itself.)
 2. Each label of the hostname of the test object is used as the input
