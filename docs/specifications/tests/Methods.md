@@ -18,17 +18,12 @@ The method has been removed. The function is integrated in [BASIC01] instead.
 ### Objective
 
 Obtain the name servers names (extracted from the NS records) for 
-the given zone (child zone) as defined in the delegation from the parent zone.
+an existing zone (child zone) as defined in the delegation from the parent zone.
 
 ### Inputs
 
  * *Child zone* - The name of the zone to test.
  * *Parent NS* - The set of IP addresses of the name servers of the parent zone of the *child zone*.
-
-### Preconditions
-
- * *Child zone* exists.
- * *Child zone* is delegated.
 
 ### Ordered description of steps to be taken to execute the method
 
