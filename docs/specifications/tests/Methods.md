@@ -41,7 +41,7 @@ the given zone (child zone) as defined in the delegation from the parent zone.
     4. For each *NS record* in the authority section of the *packet*:
        1. If the owner name of the *NS record* is not *child zone*, continue with the next *NS record*.
        2. Add the *NSDNAME* field from the *NS record* to the set of *results*.
- 4. If the *result* set is empty:
+ 4. If the set of *results* is empty:
     1. Create an *NS query* for the *child zone* with the RD bit unset.
     2. For each *NS IP* in the *parent NS* set:
        1. Send the *NS query* to *NS IP* and collect any response *packet*.
