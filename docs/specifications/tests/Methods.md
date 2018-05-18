@@ -22,35 +22,35 @@ the given zone (child zone) as defined in the delegation from the parent zone.
 
 ### Inputs
 
- * **Child zone** - The name of the zone to test.
- * **Parent NS** - The set of IP addresses of the name servers of the parent zone of the **child zone**.
+ * *Child zone* - The name of the zone to test.
+ * *Parent NS* - The set of IP addresses of the name servers of the parent zone of the *child zone*.
 
 ### Preconditions
 
- * **Child zone** exists.
- * **Child zone** is delegated.
+ * *Child zone* exists.
+ * *Child zone* is delegated.
 
 ### Ordered description of steps to be taken to execute the method
 
- 1. Create an empty mutable set of **results**.
- 2. Create an **SOA query** for the **child zone** with the RD bit unset.
- 3. For each **NS IP** in the **parent NS** set:
-    1. Send the **SOA query** to the **NS IP** and collect any response **packet**.
-    2. If no **packet** was collected, continue with the next **NS IP**.
-    3. If the **packet** has the AA bit set, continue with the next **NS IP**.
-    4. For each **NS record** in the authority section of the **packet**:
-       1. If the owner name of the **NS record** is not **child zone**, continue with the next **NS record**.
-       2. Add the **NSDNAME** field from the **NS record** to the set of **results**.
- 4. If the **result** set is empty:
-    1. Create an **NS query** for the **child zone** with the RD bit unset.
-    2. For each **NS IP** in the **parent NS** set:
-       1. Send the **NS query** to **NS IP** and collect any response **packet**.
-       2. If no **packet** was collected, continue with the next **NS IP**.
-       3. If the **packet** has the AA bit unset, continue with the next **NS IP**.
-       4. For each **NS record** in the answer section of the **packet**:
-          1. If the owner name of the **NS record** is not **child zone**, continue with the next **NS record**.
-          2. Add the **NSDNAME** field from the **NS record** to the set of **results**.
- 5. Return the set of **results**.
+ 1. Create an empty mutable set of *results*.
+ 2. Create an *SOA query* for the *child zone* with the RD bit unset.
+ 3. For each *NS IP* in the *parent NS* set:
+    1. Send the *SOA query* to the *NS IP* and collect any response *packet*.
+    2. If no *packet* was collected, continue with the next *NS IP*.
+    3. If the *packet* has the AA bit set, continue with the next *NS IP*.
+    4. For each *NS record* in the authority section of the *packet*:
+       1. If the owner name of the *NS record* is not *child zone*, continue with the next *NS record*.
+       2. Add the *NSDNAME* field from the *NS record* to the set of *results*.
+ 4. If the *result* set is empty:
+    1. Create an *NS query* for the *child zone* with the RD bit unset.
+    2. For each *NS IP* in the *parent NS* set:
+       1. Send the *NS query* to *NS IP* and collect any response *packet*.
+       2. If no *packet* was collected, continue with the next *NS IP*.
+       3. If the *packet* has the AA bit unset, continue with the next *NS IP*.
+       4. For each *NS record* in the answer section of the *packet*:
+          1. If the owner name of the *NS record* is not *child zone*, continue with the next *NS record*.
+          2. Add the *NSDNAME* field from the *NS record* to the set of *results*.
+ 5. Return the set of *results*.
 
 ### Outcome(s)
 
@@ -59,8 +59,8 @@ A set of name servers.
 ### Special procedural requirements
 
  * The response to a given query from a given server may be cached in order to limit the number of requests.
- * The **Results** set preserves neither duplicates nor order among its elements.
- * The **Results** set compares its elements case-insensitively.
+ * The *results* set preserves neither duplicates nor order among its elements.
+ * The *results* set compares its elements case-insensitively.
 
 ### Dependencies
 
