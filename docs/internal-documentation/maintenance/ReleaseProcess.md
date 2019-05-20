@@ -6,7 +6,18 @@ Release process
 Make sure the [declaration of prerequisites] is up to date with regard to
 [SupportCriteria](SupportCriteria.md).
 
-## 2. Update the Changes file
+## 2. Update [CI] configuration
+
+Make sure the Travis configuration for each repo is up to date with the supported Perl versions.
+
+ * zonemaster-ldns - [.travis.yml](https://github.com/zonemaster/zonemaster-ldns/blob/master/.travis.yml)
+ * zonemaster-engine - [.travis.yml](https://github.com/zonemaster/zonemaster-engine/blob/master/.travis.yml)
+ * zonemaster-cli - [.travis.yml](https://github.com/zonemaster/zonemaster-cli/blob/master/.travis.yml)
+ * zonemaster-backend - [.travis.yml](https://github.com/zonemaster/zonemaster-backend/blob/master/.travis.yml)
+ * zonemaster-gui - [.travis.yml](https://github.com/zonemaster/zonemaster-gui/blob/master/.travis.yml) --
+   Currently there is no Travis configured for GUI.
+
+## 3. Update the Changes file
 
 Any changes since the last release must be documented in the Changes files.
 The version number of the new release should be chosen according to [Versions and Releases] document.
@@ -18,7 +29,7 @@ Please refer to any Github issues related to the change by the issue number.
  * zonemaster-backend - [Changes](https://github.com/zonemaster/zonemaster-backend/blob/master/Changes)
  * zonemaster-gui - [Changes](https://github.com/zonemaster/zonemaster-gui/blob/master/Changes)
 
-## 3. Set all version numbers
+## 4. Set all version numbers
 
 The version numbers can be found in these Perl modules:
 
@@ -37,17 +48,6 @@ The GUI has no Perl. Update the following files:
    Under "client-info", "version" should point at the version number.
  * zonemaster-gui - [environment.ts](https://github.com/zonemaster/zonemaster-gui/blob/master/src/environments/environment.ts):
    Under "client-info", "version" should point at the version number.
-
-## 4. Update [CI] configuration
-
-Make sure the Travis configuration for each repo is up to date with the supported Perl versions.
-
- * zonemaster-ldns - [.travis.yml](https://github.com/zonemaster/zonemaster-ldns/blob/master/.travis.yml)
- * zonemaster-engine - [.travis.yml](https://github.com/zonemaster/zonemaster-engine/blob/master/.travis.yml)
- * zonemaster-cli - [.travis.yml](https://github.com/zonemaster/zonemaster-cli/blob/master/.travis.yml)
- * zonemaster-backend - [.travis.yml](https://github.com/zonemaster/zonemaster-backend/blob/master/.travis.yml)
- * zonemaster-gui - [.travis.yml](https://github.com/zonemaster/zonemaster-gui/blob/master/.travis.yml) --
-   Currently there is no Travis configured for GUI.
 
 ## 5. Verify that META.yml has all the correct data
 
