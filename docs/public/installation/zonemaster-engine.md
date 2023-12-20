@@ -54,6 +54,14 @@
    sudo cpanm --notest Zonemaster::LDNS Zonemaster::Engine
    ```
 
+7) Permit non-root users to run Zonemaster::Engine:
+
+   ```sh
+   # Only on Rocky Linux 8:
+   sudo chmod -R og+rX /usr/local/lib64/perl5/ /usr/local/share/perl5/
+   ```
+
+
 ### Installation on Debian and Ubuntu
 
 Using pre-built packages is the preferred method for Debian and Ubuntu.

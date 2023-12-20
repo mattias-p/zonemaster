@@ -53,6 +53,13 @@ Zonemaster::CLI, see the [declaration of prerequisites].
    sudo cpanm Zonemaster::CLI
    ```
 
+4) Permit non-root users to run Zonemaster::CLI:
+
+   ```sh
+   # Only on Rocky Linux 8:
+   sudo chmod -R og+rX /usr/local/lib64/perl5/
+   ```
+
 
 ### Installation on Debian and Ubuntu
 

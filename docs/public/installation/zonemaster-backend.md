@@ -98,6 +98,13 @@ sudo cpanm --notest Zonemaster::Backend
 > The command above might try to install "DBD::Pg" and "DBD::mysql".
 > You can ignore if it fails. The relevant libraries are installed further down in these instructions.
 
+Permit non-root users to run Zonemaster::Backend:
+
+   ```sh
+   # Only on Rocky Linux 8:
+   sudo chmod -R og+rX /usr/local/lib64/perl5/ /usr/local/share/perl5/
+   ```
+
 Add Zonemaster user (unless it already exists):
 
 ```sh
