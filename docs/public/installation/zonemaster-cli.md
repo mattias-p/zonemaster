@@ -41,19 +41,13 @@ Zonemaster::CLI, see the [declaration of prerequisites].
    sudo dnf install perl-JSON-XS perl-MooseX-Getopt perl-Try-Tiny
    ```
 
-2) Install dependencies from CPAN:
-
-   ```sh
-   sudo cpanm Text::Reflow
-   ```
-
-3) Install Zonemaster::CLI
+2) Install Zonemaster::CLI
 
    ```sh
    sudo cpanm Zonemaster::CLI
    ```
 
-4) Permit non-root users to run Zonemaster::CLI:
+3) Permit non-root users to run Zonemaster::CLI:
 
    ```sh
    # Only on Rocky Linux 8:
