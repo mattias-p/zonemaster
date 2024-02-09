@@ -11,6 +11,10 @@ Zonemaster components and how they interact to achieve the desired result.
  * [Architecture Notes.md]  
    TBD
 
+ * [UseCases.md]  
+   A list of use cases meant to serve as a reference when validating feature
+   designs.
+
  * [Implementation Guidelines.md]  
    TBD
 
