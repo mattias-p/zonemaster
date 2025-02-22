@@ -20,6 +20,163 @@
 * [Terminology](#terminology)
 
 
+```mermaid
+flowchart TD;
+
+start(( ))
+start --> input-child-zone@{ shape: manual-input, label: "input: *ChildZone* is a domain" } --> input-root-name-servers@{ shape: manual-input, label: "input: *RootNameServers* is a set of (domain, ip)-pairs" } --> input-undelegated-data@{ shape: manual-input, label: "input: *UndelegatedData* is a ?" } --> root-cond
+
+root-cond{{"decision: is *ChildZone* the root zone?"}}
+root-cond -- no --> undelegated-cond
+
+undelegated-cond{{"decision: is *UndelegatedData* empty?"}}
+undelegated-cond -- no --> unresolvable-interleave-in
+
+unresolvable-interleave-in@{ shape: fork }
+unresolvable-interleave-out@{ shape: junction }
+unresolvable-interleave-in --> server-initial
+unresolvable-interleave-in -- "unresolvable" --> unresolvable-interleave-out
+
+server-initial@{ shape: loop-limit, label: "for each: *nsip* in the addresses of *RootNameServers*" }
+server-initial -- "(remaining, *nsip*, #quot;.#quot;)" --> remaining-iterate-in
+
+remaining-iterate-in@{ shape: junction } -- "(parent, *nsip*)<br>(remaining, *nsip*, *qname*)" --> remaining-tag-cond
+remaining-iterate-out@{ shape: fork }
+remaining-iterate-out -- "(parent, *nsip*)<br>(remaining, *nsip*, *qname*)" --> remaining-iterate-in
+remaining-iterate-out -- "(*tag*=parent, *nsip*)<br>(*tag*=remaining, *nsip*, *qname*)" --> parent-cond
+
+remaining-tag-cond{{"decision: is *tag* remaining?"}}
+remaining-tag-cond -- "yes / (*nsip*, *qname*)" --> remaining-unique-cond
+
+remaining-unique-cond{{"decision: was (*nsip*, *qname*) seen here before?"}}
+remaining-unique-cond -- "no / (*qname*, *nsip*)" --> remaining-soa-query
+
+remaining-soa-query[/"DNS request: @*nsip* *qname* SOA"/]
+remaining-soa-response[\"DNS response: *response*"\]
+remaining-soa-query -- "(*nsip*, *qname*)" --> remaining-soa-response -- "(*nsip*, *qname*, *response*)" --> remaining-soa-no-response-cond
+
+remaining-soa-no-response-cond{{"decision: is *response* no_response?"}}
+remaining-soa-no-response-cond -- "yes / (*nsip*, *qname*, *response*)" --> remaining-soa-rcode-cond
+
+remaining-soa-rcode-cond{{"decision: is the RCODE of *response* NOERROR?"}}
+remaining-soa-rcode-cond -- "yes / (*nsip*, *qname*, *response*)" --> remaining-soa-aa-cond
+
+remaining-soa-aa-cond{{"decision: is the AA flag of *response* set?"}}
+remaining-soa-aa-cond -- "yes / (*nsip*, *qname*, *response*)" --> remaining-soa-count-cond
+
+remaining-soa-count-cond{{"decision: does the answer section of *response* contain exactly one SOA record?"}}
+remaining-soa-count-cond -- "yes / (*nsip*, *qname*, *response*)" --> remaining-soa-owner-cond
+
+remaining-soa-owner-cond{{"decision: does the answer section of *response* contain any SOA record with *qname* for owner name?"}}
+remaining-soa-owner-cond -- "yes / (*nsip*, *qname*)" --> remaining-ns-query
+
+remaining-ns-query[/"DNS request: @*nsip* *qname* NS"/]
+remaining-ns-response[\"DNS response: *response*"\]
+remaining-ns-query -- "(*nsip*, *qname*)" --> remaining-ns-response -- "(*nsip*, *qname*, *response*)" --> remaining-ns-no-response-cond
+
+remaining-ns-no-response-cond{{"decision: is *response* no_response?"}}
+remaining-ns-no-response-cond -- "yes / (*nsip*, *qname*, *response*)" --> remaining-ns-rcode-cond
+
+remaining-ns-rcode-cond{{"decision: is the RCODE of *response* NOERROR?"}}
+remaining-ns-rcode-cond -- "yes / (*nsip*, *qname*, *response*)" --> remaining-ns-aa-cond
+
+remaining-ns-aa-cond{{"decision: is the AA flag of *response* set?"}}
+remaining-ns-aa-cond -- "yes / (*nsip*, *qname*, *response*)" --> remaining-ns-count-cond
+
+remaining-ns-count-cond{{"decision: does the answer section of *response* contain at least one NS record?"}}
+remaining-ns-count-cond -- "yes / (*nsip*, *qname*, *response*)" --> remaining-ns-owner-cond
+
+remaining-ns-owner-cond{{"decision: does every NS record in the answer section of *response* have *qname* for owner name?"}}
+remaining-ns-owner-cond -- "yes / (*nsip*, *qname*, *response*)" --> remaining-ns-lookup-interleave-in
+
+remaining-ns-lookup-interleave-in@{ shape: fork }
+remaining-ns-lookup-interleave-out@{ shape: junction }
+remaining-ns-lookup-interleave-in -- "(*qname*, *response*)" --> remaining-ns-additional
+remaining-ns-lookup-interleave-in -- "(intermediate, *nsip*, *qname*)" --> intermediate-iterate-in
+remaining-ns-lookup-interleave-out -- "(parent, *nsip*)<br>(remaining, *nsip*, *qname*)" --> remaining-iterate-out
+
+remaining-ns-additional@{ shape: loop-limit, label: "for each: *nsdname* in the RRs of the additional section of *response*" }
+remaining-ns-additional -- "(*qname*, *nsdname*)" --> remaining-ns-lookup
+
+remaining-ns-lookup@{ shape: loop-limit, label: "for each: *nsip* in DnsLookup(*nsdname*)" }
+remaining-ns-lookup -- "(remaining, *nsip*, *qname*)" --> remaining-ns-lookup-interleave-out
+
+intermediate-iterate-in@{ shape: junction }
+intermediate-iterate-out@{ shape: fork }
+intermediate-iterate-in -- "(*tag*=intermediate, *nsip*, *qnameParent*)<br>(*tag*=parent, *nsip*)<br>(*tag*=remaining, *nsip*, *qnameInter*)" --> intermediate-tag-cond
+intermediate-iterate-out -- "(parent, *nsip*)<br>(remaining, *nsip*, *qnameInter*)" --> intermediate-iterate-in
+intermediate-iterate-out -- "(parent, *nsip*)<br>(remaining, *nsip*, *qnameInter*)" --> remaining-ns-lookup-interleave-out
+
+intermediate-tag-cond{{"decision: is *tag* intermediate?"}}
+intermediate-tag-cond -- "yes / (*nsip*, *qnameParent*)" --> intermediate-qname
+
+intermediate-qname["compute *qnameInter*: take the direct subdomain of *qnameParent* that is also an ancestor of *ChildZone*"]
+intermediate-qname -- "(*nsip*, *qnameInter*)" --> intermediate-soa-query
+
+intermediate-soa-query[/"DNS request: @*nsip* *qnameInter* SOA"/]
+intermediate-soa-response[\"DNS response: *response*"\]
+intermediate-soa-query -- "(*nsip*, *qnameInter*)" --> intermediate-soa-response -- "(*nsip*, *qnameInter*, *response*)" --> intermediate-soa-no-response-cond
+
+intermediate-soa-no-response-cond{{"decision: is *response* no_response?"}}
+intermediate-soa-no-response-cond -- "yes / (*nsip*, *qnameInter*, *response*)" --> intermediate-soa-rcode-cond
+
+intermediate-soa-rcode-cond{{"decision: is the RCODE of *response* NOERROR?"}}
+intermediate-soa-rcode-cond -- "yes / (*nsip*, *qnameInter*, *response*)" --> intermediate-soa-aa-cond
+
+intermediate-soa-aa-cond{{"decision: is the AA flag of *response* set?"}}
+intermediate-soa-aa-cond -- "yes / (*nsip*, *qnameInter*)" --> intermediate-soa-count-cond
+intermediate-soa-aa-cond -- "no / (*qnameInter*, *response*)" --> intermediate-soa-referral-cond
+
+intermediate-soa-count-cond{{"decision: does the answer section of *response* contain exactly one SOA record with *qnameInter* for owner name?"}}
+intermediate-soa-count-cond -- "yes / (*nsip*, *qnameInter*)" --> intermediate-soa-qname-cond-1
+intermediate-soa-count-cond -- "no / (intermediate, *nsip*, *qnameInter*)" --> intermediate-iterate-out
+
+intermediate-soa-qname-cond-1{{"decision: is *qnameInter* *ChildZone*?"}}
+intermediate-soa-qname-cond-1 -- "yes / (parent, *nsip*)" --> intermediate-iterate-out
+intermediate-soa-qname-cond-1 -- "no / (*nsip*, *qnameInter*)" --> intermediate-ns-query
+
+intermediate-ns-query[/"DNS request: @*nsip* *qnameInter* NS"/]
+intermediate-ns-response[\"DNS response: *response*"\]
+intermediate-ns-query -- "*qnameInter*" --> intermediate-ns-response -- "(*qnameInter*, *response*)" --> intermediate-ns-no-response-cond
+
+intermediate-ns-no-response-cond{{"decision: is *response* no_response?"}}
+intermediate-ns-no-response-cond -- "yes / (*qnameInter*, *response*)" --> intermediate-ns-rcode-cond
+
+intermediate-ns-rcode-cond{{"decision: is the RCODE of *response* NOERROR?"}}
+intermediate-ns-rcode-cond -- "yes / (*qnameInter*, *response*)" --> intermediate-ns-aa-cond
+
+intermediate-ns-aa-cond{{"decision: is the AA flag of *response* set?"}}
+intermediate-ns-aa-cond -- "yes / (*qnameInter*, *response*)" --> intermediate-ns-count-cond
+
+intermediate-ns-count-cond{{"decision: does the answer section of *response* contains at least one NS record?"}}
+intermediate-ns-count-cond -- "yes / (*qnameInter*, *response*)" --> intermediate-ns-owner-cond
+
+intermediate-ns-owner-cond{{"decision: does the answer section of *response* contains at least one NS record with an owner name different from *qnameInter*?"}}
+intermediate-ns-owner-cond -- "no / (*qnameInter*, *response*)" --> intermediate-ns-referral
+
+intermediate-soa-referral-cond{{"decision: does the authority section of *response* contain any NS records?"}}
+intermediate-soa-referral-cond -- "yes / (*qnameInter*, *response*)" --> intermediate-soa-qname-cond-3
+
+intermediate-soa-qname-cond-3{{"decision: is *qnameInter* *ChildZone*?"}}
+intermediate-soa-qname-cond-3 -- "yes / (*qnameInter*, *response*)" --> intermediate-soa-referral
+%% intermediate-ns-qname-cond-3 -- "no / (*nsip*, *qnameInter*)" --> intermediate-ns-query
+
+intermediate-ns-referral@{ shape: loop-limit, label: "for each: *nsip* in GetReferral(*nsdname*, *response*)" }
+intermediate-ns-referral -- (remaining, *nsip*, *qnameInter*) --> intermediate-iterate-out
+
+intermediate-soa-referral@{ shape: loop-limit, label: "for each: *nsip* in GetReferral(*nsdname*, *response*)" }
+intermediate-soa-referral -- (remaining, *nsip*, *qnameInter*) --> intermediate-iterate-out
+
+parent-cond{{"decision: is *tag* parent"}}
+parent-cond -- "(parent, *nsip*)" --> unresolvable-interleave-out
+
+unresolvable-interleave-out
+unresolvable-interleave-out -- "(parent, *nsip*)<br>unresolvable" --> parent-preference
+
+parent-preference@{ shape: loop-limit, label: "perfer: parent" }
+parent-preference -- "(parent, *nsip*)<br>unresolvable" --> parent-end((( )))
+```
+
 ## Objective
 
 The Methods are used in, and referred from, the Test Case specifications as

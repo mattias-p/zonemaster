@@ -71,7 +71,7 @@ message. The argument names are defined in the [Argument list].
    [Get-Zone-NS-Names-and-IPs] and add any non-duplicate results to 
    *Name Server IP* set. 
 
-4. If the *Name Server IP* set is empty, output *[A01_NO_NAME_SERVERS_FOUND]*
+4.1. If the *Name Server IP* set is empty, output *[A01_NO_NAME_SERVERS_FOUND]*
    and exit the test.
 
 5. For each name server in *Name Server IP* do:
@@ -132,12 +132,12 @@ graph TD;
    *Name Server IP* set. 
 `"]
 
-IF1{"`
+4{"`
    Is the length 
    of the set > 1 ? 
 `"}
 
-4["`
+4.1["`
    Output *[A01_NO_NAME_SERVERS_FOUND]*
 `"]
 5["`
@@ -237,11 +237,11 @@ END["`
     click R #summary" "link"
 
     1 --> 2
-    2 --> 3 
-    3 --> IF1 
-    IF1 -- no --> 4
-    4 --> END
-    IF1 -- yes --> 5
+    2 --> 3
+    3 --> 4
+    4 -- no --> 4.1
+    4.1 --> END
+    4 -- yes --> 5
     5 --> 5.1
     5.1 -- yes --> 5.1.1
     5.1 -- no --> 5.2
@@ -249,7 +249,7 @@ END["`
     5.2 -- no --> 5.3
     5.3 -- yes --> 5.3.1
     5.3 -- no --> 5.4
-   
+
     5.1.1 --> 5.4
     5.2.1 --> 5.4
     5.3.1 --> 5.4
