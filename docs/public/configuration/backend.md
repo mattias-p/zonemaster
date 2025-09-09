@@ -59,9 +59,6 @@ In addition to the configuration file, some settings can configured using
 
 ## RPCAPI section
 
-Available keys: `enable_batch_create`, `enable_user_create`,
-`enable_add_batch_job`, `enable_add_api_user`.
-
 ### enable_add_batch_job
 
 Boolean value to enable the `add_batch_job` and `batch_create` methods of the API.
@@ -86,9 +83,6 @@ An experimental alias for [enable_add_api_user][RPCAPI.enable_add_api_user].
 
 
 ## DB section
-
-Available keys : `engine`, `user`, `password`, `database_name`,
-`database_host`, `polling_interval`.
 
 ### engine
 
@@ -116,8 +110,6 @@ Default value: `0.5`.
 
 
 ## MYSQL section
-
-Available keys : `host`, `port`, `user`, `password`, `database`.
 
 ### host
 
@@ -159,8 +151,6 @@ The name of the database to use.
 
 ## POSTGRESQL section
 
-Available keys : `host`, `port`, `user`, `password`, `database`.
-
 ### host
 
 An [LDH domain name] or IP address.
@@ -194,8 +184,6 @@ The name of the database to use.
 
 
 ## SQLITE section
-
-Available keys : `database_file`.
 
 ### database_file
 
